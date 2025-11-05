@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pydeck as pdk
-import altair as alt  # <-- 1. Importar o Altair
+import altair as alt  
 
-# --- Funções de Cálculo (Exatamente as mesmas) ---
+
 
 # Raio da Terra em metros
 EARTH_RADIUS_METERS = 6371000
@@ -81,7 +81,6 @@ def process_telemetry_data(df: pd.DataFrame) -> pd.DataFrame:
     df_processed['icon'] = 'arrow'
     return df_processed
 
-# --- Lógica Principal da Aplicação ---
 
 st.title("Analisador de Log de Telemetria")
 
@@ -101,18 +100,17 @@ if uploaded_file is not None:
             
             if not df_processed.empty:
                 
-                # --- 2. MUDANÇA AQUI: de st.line_chart para st.altair_chart ---
                 
                 st.subheader("Gráfico de Velocidade vs. Tempo")
                 
                 # Criar o gráfico com Altair
                 vel_chart = alt.Chart(df_processed).mark_line().encode(
-                    # Configurar o eixo X: 'tickCount=10' pede "mais números"
+                    
                     x=alt.X('time_s', title='Tempo (s)', axis=alt.Axis(grid=True, tickCount=10)),
-                    # Configurar o eixo Y
+                   
                     y=alt.Y('vel', title='Velocidade (km/h)', axis=alt.Axis(grid=True, tickCount=10)),
-                    tooltip=['time_s', 'vel'] # Tooltip ao passar o rato
-                ).interactive() # Permite zoom e arrastar
+                    tooltip=['time_s', 'vel'] 
+                ).interactive()
                 
                 # Exibir o gráfico
                 st.altair_chart(vel_chart, use_container_width=True)
@@ -127,11 +125,10 @@ if uploaded_file is not None:
                 ).interactive()
                 
                 st.altair_chart(accel_chart, use_container_width=True)
-                
-                # --- FIM DA MUDANÇA ---
+              
 
 
-                # O mapa Pydeck continua igual
+
                 st.subheader("Mapa da Rota")
                 
                 ICON_URL = "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-arrow-up.png"

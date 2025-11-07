@@ -162,6 +162,9 @@ if uploaded_file is not None:
                     map_style="mapbox://styles/mapbox/light-v9",
                     tooltip={"text": "Velocidade: {vel} km/h\nDireção: {bearing:.1f}°"}
                 ))
+
+                st.subheader("Mapa da Rota")
+                st.map(df_processed, latitude='lat', longitude='lng') 
                 
                 st.success("Processamento concluído com sucesso!")
             
